@@ -1,6 +1,6 @@
 # django-simple-microservices 10web task
 ***
-10Web company gave a task.
+10Web company gave a task. The task would be implemented by microservices by Flask engine.
 ## Task Description
 
 Imagine a platform which provides news feed service. The task is to design an architecture that
