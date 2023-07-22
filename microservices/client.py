@@ -1,16 +1,18 @@
 import datetime
+import os
 from functools import wraps
 import uuid
 from flask import Flask, request, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+import json
 import requests
 
 from models.client import Users, db
 
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = "004f2af45d3a4e161a7dd2d17fdae47f"
+app.config["SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 app.config[
     "SQLALCHEMY_DATABASE_URI"
 ] = "sqlite:///client.db"
@@ -21,6 +23,7 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
 
 def token_required(funct):
     @wraps(funct)
@@ -34,14 +37,23 @@ def token_required(funct):
             return jsonify({"message": "a valid token is missing"})
 
         try:
-            data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-            current_user = Users.query.filter_by(public_id=data["public_id"]).first()
+            decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
         except:
             return jsonify({"message": "token is invalid"})
 
-        return funct(current_user, *args, **kwargs)
+        return funct(*args, **kwargs)
 
     return decorator
+
+
+# This is not safe, it is just for task quick compleat
+# The auth must be by some secret keys or by logged in checking
+@app.route("/get_client_token/<request_id>", methods=["GET"])
+def get_token(request_id):
+    token = jwt.encode({
+        'request_id': request_id
+    }, app.config['SECRET_KEY'], algorithm="HS256")
+    return jsonify({"token": token})
 
 
 @app.route("/register", methods=["POST"])
@@ -67,17 +79,36 @@ def signup_user():
     db.session.add(new_user)
     db.session.commit()
 
-    user_info = {
-        'email': new_user.email,
-        'device_type': new_user.device_type,
-        'localization': new_user.localization
+    subscription_token = requests.get("http://127.0.0.1:5000/check_user_subscription_email/123")
+    headers = {
+        'Content-Type': 'application/json',
+        'x-access-tokens': subscription_token
     }
-    # response = requests.post("example.com", json=data)
+
+    payload = json.dumps({
+        "email": data.get('email'),
+        "localization": data.get('localization'),
+        "device_type": data.get('device_type')
+    })
+    response = requests.request(
+        "POST", "http://127.0.0.1:5000/subscribe",
+        data=payload
+    )
+
+    response = requests.request(
+        "GET", "http://127.0.0.1:5000/check_user_email/%s" % existing_email,
+        headers=headers
+    ).json()
+
+    if not response['has_subscription']:
+        db.session.delete(Users.query.filter_by(email=data.get('email')).first())
+        return jsonify({'error': 'Email do not exist, user do not registered'})
 
     return jsonify({"message": "registeration successfully"})
 
 
 @app.route('/check_user_id/<client_id>', methods=['GET'])
+@token_required
 def check_user_by_id(client_id):
     client = Users.query.get(client_id)
     if not client:
@@ -87,6 +118,7 @@ def check_user_by_id(client_id):
 
 
 @app.route('/check_user_email/<client_email>', methods=['GET'])
+@token_required
 def check_user_by_email(client_email):
     if not client_email:
         return jsonify({'error': 'Email not provided', 'has_user': False, 'status': 400})

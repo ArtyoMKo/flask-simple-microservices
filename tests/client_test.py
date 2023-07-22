@@ -1,4 +1,5 @@
 # test_app.py
+import os
 
 import pytest
 from microservices.client import app, db
