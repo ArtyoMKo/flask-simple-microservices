@@ -1,4 +1,7 @@
 # django-simple-microservices 10web task
+![](https://img.shields.io/badge/Python-3.9-green?style=flat-square)
+
+
 ***
 10Web company gave a task. The task would be implemented by microservices by Flask engine.
 ## Task Description
@@ -24,12 +27,13 @@ subscription or a subscription without a client.
 
 # Microservices design
 ### High level design
-![](/home/artyom/work/personal/flask-simple-microservices/flask_microservice_example-High level.drawio.png)
+![High level](flask_microservice_example-High level.drawio.png)
 ### Algorithmic level design
-![](/home/artyom/work/personal/flask-simple-microservices/flask_microservice_example-Algorithmic level.drawio.png)
+![Algorithmic level](flask_microservice_example-Algorithmic level.drawio.png)
 ***
 
 # Project description
+```
 ├── .github
 │   └── workflows
 │       ├── code_quality.yml
@@ -55,7 +59,7 @@ subscription or a subscription without a client.
     ├── helpers_test.py
     ├── __init__.py
     └── subscription_test.py
-
+```
 ***
 ### Steps for running service
 
