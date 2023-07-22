@@ -7,4 +7,9 @@ disable=logging-fstring-interpolation
 
 [MESSAGES CONTROL]
 
-disable=no-member,
+disable=no-member
+
+[SIMILARITIES]
+
+# Minimum lines number of a similarity.
+min-similarity-lines=10

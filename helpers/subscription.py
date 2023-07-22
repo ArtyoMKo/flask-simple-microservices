@@ -1,5 +1,4 @@
 from typing import Dict, Optional, Mapping, Union
-import json
 import requests
 
 

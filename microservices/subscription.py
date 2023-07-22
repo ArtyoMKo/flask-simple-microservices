@@ -2,7 +2,6 @@ from functools import wraps
 import os
 from flask import Flask, request, jsonify
 import jwt
-import requests
 
 from models.subscription import (
     Subscriptions,
