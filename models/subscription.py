@@ -1,8 +1,10 @@
+# mypy: ignore-errors
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
 
+# type: ignore
 class Subscriptions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sub_id = db.Column(db.Integer, nullable=False)
@@ -11,9 +13,8 @@ class Subscriptions(db.Model):
     localization = db.Column(db.String(50), nullable=False)
     device_type = db.Column(db.String(20), nullable=False)
 
-    def __init__(
-            self, sub_id, name, email, localization, device_type
-    ):
+    # pylint:disable=too-many-arguments
+    def __init__(self, sub_id, name, email, localization, device_type):
         self.sub_id = sub_id
         self.name = name
         self.email = email
@@ -27,7 +28,11 @@ class DefaultSubscriptions(db.Model):
     localization = db.Column(db.String(50), nullable=False)
     device_type = db.Column(db.String(20), nullable=False)
 
-    __table_args__ = (db.UniqueConstraint('name', 'localization', 'device_type', name='_column1_column2_uc'),)
+    __table_args__ = (
+        db.UniqueConstraint(
+            "name", "localization", "device_type", name="_column1_column2_uc"
+        ),
+    )
 
     def __init__(self, name, localization, device_type):
         self.name = name
@@ -38,21 +43,9 @@ class DefaultSubscriptions(db.Model):
 def create_and_populate_default_subscriptions_table(database_object):
     if not DefaultSubscriptions.query.all():
         default_subscriptions = [
-            DefaultSubscriptions(
-                name='sub1',
-                localization='am',
-                device_type='ios'
-            ),
-            DefaultSubscriptions(
-                name='sub2',
-                localization='en',
-                device_type='ios'
-            ),
-            DefaultSubscriptions(
-                name='sub3',
-                localization='en',
-                device_type='android'
-            ),
+            DefaultSubscriptions(name="sub1", localization="am", device_type="ios"),
+            DefaultSubscriptions(name="sub2", localization="en", device_type="ios"),
+            DefaultSubscriptions(name="sub3", localization="en", device_type="android"),
         ]
 
         database_object.session.bulk_save_objects(default_subscriptions)

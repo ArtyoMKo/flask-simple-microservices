@@ -4,3 +4,7 @@ disable=missing-module-docstring, missing-class-docstring, missing-function-docs
 
 [LOGGING]
 disable=logging-fstring-interpolation
+
+[MESSAGES CONTROL]
+
+disable=no-member,
