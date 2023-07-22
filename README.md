@@ -1,4 +1,26 @@
 # django-simple-microservices 10web task
+![](https://img.shields.io/badge/Python-3.9-green?style=flat-square)
+<!-- TOC -->
+* [django-simple-microservices 10web task](#django-simple-microservices-10web-task)
+  * [Task Description](#task-description)
+* [Microservices design](#microservices-design)
+    * [High level design](#high-level-design)
+    * [Algorithmic level design](#algorithmic-level-design)
+* [Project description](#project-description)
+    * [Steps for running service](#steps-for-running-service)
+  * [Installation:](#installation)
+    * [Local Setup](#local-setup)
+* [Usage](#usage)
+  * [Methodology](#methodology)
+  * [Running services](#running-services)
+  * [API endpoints](#api-endpoints)
+  * [Contributing guidelines](#contributing-guidelines)
+    * [Branching strategy](#branching-strategy)
+    * [New features or refactorings](#new-features-or-refactorings)
+    * [CI/CD](#cicd)
+      * [Coverage](#coverage)
+  * [Future Work](#future-work)
+<!-- TOC -->
 ***
 10Web company gave a task. The task would be implemented by microservices by Flask engine.
 ## Task Description
@@ -24,12 +46,13 @@ subscription or a subscription without a client.
 
 # Microservices design
 ### High level design
-![](/home/artyom/work/personal/flask-simple-microservices/flask_microservice_example-High level.drawio.png)
+![High level](flask_microservice_example-High level.drawio.png)
 ### Algorithmic level design
-![](/home/artyom/work/personal/flask-simple-microservices/flask_microservice_example-Algorithmic level.drawio.png)
+![Algorithmic level](flask_microservice_example-Algorithmic level.drawio.png)
 ***
 
 # Project description
+```
 ├── .github
 │   └── workflows
 │       ├── code_quality.yml
@@ -55,7 +78,7 @@ subscription or a subscription without a client.
     ├── helpers_test.py
     ├── __init__.py
     └── subscription_test.py
-
+```
 ***
 ### Steps for running service
 
