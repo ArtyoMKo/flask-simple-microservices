@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "4deede57-3eae-40be-972e-62e46e135a0d",
+		"name": "10Task_microservice_endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17984993"
+	},
+	"item": [
+		{
+			"name": "Register new client",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\":\"12121212121\",\n    \"name\":\"Artyom\",\n    \"email\":\"exssssss@mail.com\",\n    \"localization\":\"am\",\n    \"device_type\":\"ios\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"register"
+					]
+				},
+				"description": "Registering new client"
+			},
+			"response": []
+		},
+		{
+			"name": "Check registered user by email",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyZXF1ZXN0X2lkIjoiMTIzIn0.8gYpw4n0hQeX9GgeNIEpN4HlglBmRPYj0njtn-Fd5IM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/check_user_email/exssssss@mail.com",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"check_user_email",
+						"exssssss@mail.com"
+					]
+				},
+				"description": "Checking registered user by email, it is usefull for checking user before creating subscription\n\n**Required to have access token (see get client token endpoint)**"
+			},
+			"response": []
+		},
+		{
+			"name": "Get client token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/get_client_token/123",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"get_client_token",
+						"123"
+					]
+				},
+				"description": "For checking user existing in service you need to get token by this endpoint and use it for requesting"
+			},
+			"response": []
+		},
+		{
+			"name": "Get subscription access token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyZXF1ZXN0X2lkIjoiMTIzIn0.8gYpw4n0hQeX9GgeNIEpN4HlglBmRPYj0njtn-Fd5I",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/get_subscription_token/123",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"get_subscription_token",
+						"123"
+					]
+				},
+				"description": "Getting subscription service access token, which is required for creating subscription"
+			},
+			"response": []
+		},
+		{
+			"name": "Subscribe user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/subscribe",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"subscribe"
+					]
+				},
+				"description": "Creating subscription for new user automatically\n\n**Requires subscription access token (see Get subscription access token endpoint)**"
+			},
+			"response": []
+		}
+	]
+}
