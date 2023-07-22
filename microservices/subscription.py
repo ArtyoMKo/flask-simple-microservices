@@ -79,7 +79,7 @@ def subscribe_user():
         return jsonify(
             {
                 "error": f"There is not defined subscription for localization|"
-                         f"{data.get('localization')} and device_type|{data.get('device_type')}"
+                f"{data.get('localization')} and device_type|{data.get('device_type')}"
             }
         )
 

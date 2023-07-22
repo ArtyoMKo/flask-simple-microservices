@@ -4,9 +4,11 @@ import requests
 
 
 def check_user_registration(email: str) -> Dict:
-    client_token = requests.get(
-        "http://127.0.0.1:5000/get_client_token/123", timeout=3
-    ).json().get('token', '')
+    client_token = (
+        requests.get("http://127.0.0.1:5000/get_client_token/123", timeout=3)
+        .json()
+        .get("token", "")
+    )
     headers: Optional[Mapping[str, Union[str, bytes]]] = {
         "Content-Type": "application/json",
         "x-access-tokens": client_token,

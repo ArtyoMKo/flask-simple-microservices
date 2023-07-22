@@ -4,9 +4,13 @@ import requests
 
 
 def create_subscription(data: Dict) -> None:
-    subscription_token = requests.get(
-        "http://127.0.0.1:5000/check_user_subscription_email/123", timeout=3
-    ).json().get('token', '')
+    subscription_token = (
+        requests.get(
+            "http://127.0.0.1:5000/check_user_subscription_email/123", timeout=3
+        )
+        .json()
+        .get("token", "")
+    )
     headers: Optional[Mapping[str, Union[str, bytes]]] = {
         "Content-Type": "application/json",
         "x-access-tokens": subscription_token,
@@ -29,9 +33,13 @@ def create_subscription(data: Dict) -> None:
 
 
 def check_subscription(email: str) -> Dict:
-    subscription_token = requests.get(
-        "http://127.0.0.1:5000/check_user_subscription_email/123", timeout=3
-    ).json().get('token', '')
+    subscription_token = (
+        requests.get(
+            "http://127.0.0.1:5000/check_user_subscription_email/123", timeout=3
+        )
+        .json()
+        .get("token", "")
+    )
     headers: Optional[Mapping[str, Union[str, bytes]]] = {
         "Content-Type": "application/json",
         "x-access-tokens": subscription_token,
