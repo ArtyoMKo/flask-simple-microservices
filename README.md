@@ -98,6 +98,8 @@ logging in, etc. Each service provides independent Flask restAPI which allow us 
 manually. There is pre-defined **3** subscription plans (which is selecting automatically per registered user if it is possible).
 **If registration was not finished successfully or subscription plan was not able to assigned - Client and subscription deleting
 automatically to avoid to have Client without subscription and Subscription without Client**.
+In services used ```requests``` instead of ```asyncio```, such as services using message providers ```(example ActivMQ, Pulsar, etc)``` which is using async methodo, and
+using requests is just must easy way for implementing task, **easy, not good**.
 
 ## Running services
 Run first (Client service)
